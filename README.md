@@ -1,2 +1,3 @@
-# go-interpreter
-A go interpreter
+# go-monkey-interpreter
+
+A golang interpreter for the Monkey language.
