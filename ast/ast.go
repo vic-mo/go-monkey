@@ -16,6 +16,26 @@ type Statement interface {
 	statementNode()
 }
 
+type HashLiteral struct {
+	Token token.Token
+	Pairs map[Expression]Expression
+}
+
+func (i *HashLiteral) expressionNode()      {}
+func (i *HashLiteral) TokenLiteral() string { return i.Token.Literal }
+func (i *HashLiteral) String() string {
+	var out bytes.Buffer
+	pairs := []string{}
+	for key, value := range i.Pairs {
+		pairs = append(pairs, key.String()+":"+value.String())
+	}
+	out.WriteString("{")
+	out.WriteString(strings.Join(pairs, ", "))
+	out.WriteString("}")
+
+	return out.String()
+}
+
 type Expression interface {
 	Node
 	expressionNode()
