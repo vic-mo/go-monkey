@@ -102,6 +102,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(token.STRING, p.parseStringLiteral)
 	p.registerPrefix(token.LBRACKET, p.parseArrayLiteral)
 	p.registerPrefix(token.LBRACE, p.parseHashLiteral)
+	p.registerPrefix(token.MACRO, p.parseMacroLiteral)
 
 	// Read two tokens to set curToken and peekToken
 	p.nextToken()
@@ -110,31 +111,23 @@ func New(l *lexer.Lexer) *Parser {
 	return p
 }
 
-// func (p *Parser) parseHashLiteral() ast.Expression {
-// 	hash := &ast.HashLiteral{Token: p.curToken}
-// 	hash.Pairs = make(map[ast.Expression]ast.Expression)
+func (p *Parser) parseMacroLiteral() ast.Expression {
+	lit := &ast.MacroLiteral{Token: p.curToken}
 
-// 	for !p.peekTokenIs(token.RBRACE) {
-// 		p.nextToken()
-// 		key := p.parseExpression(LOWEST)
-// 		if !p.expectPeek(token.COLON) {
-// 			return nil
-// 		}
-// 		p.nextToken()
-// 		value := p.parseExpression(LOWEST)
-// 		hash.Pairs[key] = value
+	if !p.expectPeek(token.LPAREN) {
+		return nil
+	}
 
-// 		if !p.peekTokenIs(token.RBRACE) && !p.expectPeek(token.COMMA) {
-// 			return nil
-// 		}
-// 	}
+	lit.Parameters = p.parseFunctionParameters()
 
-// 	if !p.expectPeek(token.RBRACE) {
-// 		return nil
-// 	}
+	if !p.expectPeek(token.LBRACE) {
+		return nil
+	}
 
-// 	return hash
-// }
+	lit.Body = p.parseBlockStatement()
+
+	return lit
+}
 
 func (p *Parser) parseHashLiteral() ast.Expression {
 	hash := &ast.HashLiteral{Token: p.curToken}
