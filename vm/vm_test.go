@@ -61,6 +61,11 @@ func testExpectedObject(t *testing.T, expected interface{}, actual object.Object
 		if err != nil {
 			t.Errorf("testIntegerObject failed. %s", err)
 		}
+	case string:
+		err := testStringObject(expected, actual)
+		if err != nil {
+			t.Errorf("testStringObject failed. %s", err)
+		}
 	case bool:
 		err := testBooleanObject(expected, actual)
 		if err != nil {
@@ -72,6 +77,18 @@ func testExpectedObject(t *testing.T, expected interface{}, actual object.Object
 		}
 	}
 }
+
+func testStringObject(expected string, actual object.Object) error {
+	result, ok := actual.(*object.String)
+	if !ok {
+		return fmt.Errorf("object is not string, got=%T (%+v)", actual, actual)
+	}
+	if result.Value != expected {
+		return fmt.Errorf("object has wrong value. got=%q, want=%q", result.Value, expected)
+	}
+	return nil
+}
+
 func testBooleanObject(expected bool, actual object.Object) error {
 	result, ok := actual.(*object.Boolean)
 	if !ok {
@@ -119,6 +136,16 @@ func TestConditionals(t *testing.T) {
 		{"if (1) {10}", 10},
 		{"if (1>2) {10}", Null},
 		{"if (false) {10}", Null},
+	}
+
+	runVmTests(t, tests)
+}
+
+func TestStringExpressions(t *testing.T) {
+	tests := []vmTestCase{
+		{`"monkey"`, "monkey"},
+		{`"mon"+"key"`, "monkey"},
+		{`"mon"+"key"+"banana"`, "monkeybanana"},
 	}
 
 	runVmTests(t, tests)
