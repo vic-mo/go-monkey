@@ -87,6 +87,26 @@ func testExpectedObject(t *testing.T, expected interface{}, actual object.Object
 				t.Errorf("testIntegerObject failed. %s", err)
 			}
 		}
+	case map[object.HashKey]int64:
+		result, ok := actual.(*object.Hash)
+		if !ok {
+			t.Errorf("object is not Hash, got=%T (%+v)", actual, actual)
+			return
+		}
+		if len(result.Pairs) != len(expected) {
+			t.Errorf("wrong number of hash pairs. want=%d, got=%d", len(expected), len(result.Pairs))
+			return
+		}
+		for expectedKey, expectedValue := range expected {
+			pair, ok := result.Pairs[expectedKey]
+			if !ok {
+				t.Errorf("no pair for given key in Pairs")
+			}
+			err := testIntegerObject(expectedValue, pair.Value)
+			if err != nil {
+				t.Errorf("testIntegerObject failed. %s", err)
+			}
+		}
 	case *object.Null:
 		if actual != Null {
 			t.Errorf("object is not Null, got=%T (%+v)", actual, actual)
@@ -172,6 +192,32 @@ func TestArrayLiterals(t *testing.T) {
 		{`[]`, []int{}},
 		{`[1,2,3]`, []int{1, 2, 3}},
 		{`[1+2,3*4,5+6]`, []int{3, 12, 11}},
+	}
+
+	runVmTests(t, tests)
+}
+
+func TestHashLiterals(t *testing.T) {
+	tests := []vmTestCase{
+		{`{}`, map[object.HashKey]int64{}},
+		{`{1:2,2:3}`, map[object.HashKey]int64{(&object.Integer{Value: 1}).HashKey(): 2, (&object.Integer{Value: 2}).HashKey(): 3}},
+		{`{1+1:2*2,3+3:4*4}`, map[object.HashKey]int64{(&object.Integer{Value: 2}).HashKey(): 4, (&object.Integer{Value: 6}).HashKey(): 16}},
+	}
+
+	runVmTests(t, tests)
+}
+
+func TestIndexExpressions(t *testing.T) {
+	tests := []vmTestCase{
+		{`[1,2,3][1]`, 2},
+		{`[1,2,3][0+2]`, 3},
+		{`[1,2,3][1]`, 2},
+		{`[[1,1,1]][0][0]`, 1},
+		{`[][0]`, Null},
+		{`{}[0]`, Null},
+		{`{1:1,2:2}[1]`, 1},
+		{`{1:1,2:2}[2]`, 2},
+		{`{1:1}[0]`, Null},
 	}
 
 	runVmTests(t, tests)
