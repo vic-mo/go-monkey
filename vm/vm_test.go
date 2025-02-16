@@ -104,6 +104,8 @@ func TestIntegerArithmetic(t *testing.T) {
 		{"!!5", true},
 		{"!(if (false) {5})", true},
 		{"if ((if (false) {10})) {10} else{20}", 20},
+		{"let one=1;one;", 1},
+		{"let one=1;let two=2;one+two;", 3},
 	}
 
 	runVmTests(t, tests)
