@@ -222,3 +222,11 @@ func TestIndexExpressions(t *testing.T) {
 
 	runVmTests(t, tests)
 }
+
+func TestCallingFunctionsWithoutArguments(t *testing.T) {
+	tests := []vmTestCase{
+		{`let fiveTen=fn(){5+10;};fiveTen();`, 15},
+	}
+
+	runVmTests(t, tests)
+}
