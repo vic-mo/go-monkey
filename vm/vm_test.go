@@ -230,3 +230,19 @@ func TestCallingFunctionsWithoutArguments(t *testing.T) {
 
 	runVmTests(t, tests)
 }
+
+func TestCallingFunctionsWithBindings(t *testing.T) {
+	tests := []vmTestCase{
+		{`let one=fn(){let one=1;one};one();`, 1},
+	}
+
+	runVmTests(t, tests)
+}
+
+func TestFirstClassFunctions(t *testing.T) {
+	tests := []vmTestCase{
+		{`let returnsOneReturner=fn(){let returnsOne=fn(){1};returnsOne};returnsOneReturner()();`, 1},
+	}
+
+	runVmTests(t, tests)
+}
