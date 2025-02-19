@@ -111,6 +111,14 @@ func testExpectedObject(t *testing.T, expected interface{}, actual object.Object
 		if actual != Null {
 			t.Errorf("object is not Null, got=%T (%+v)", actual, actual)
 		}
+	case *object.Error:
+		errorObj, ok := actual.(*object.Error)
+		if !ok {
+			t.Errorf("object is not Error, got=%T (%+v)", actual, actual)
+		}
+		if errorObj.Message != expected.Message {
+			t.Errorf("wrong error message. expected=%q, got=%q", expected.Message, errorObj.Message)
+		}
 	}
 }
 
@@ -251,6 +259,17 @@ func TestCallingFunctionsWithArgumentsAndBIndigns(t *testing.T) {
 	tests := []vmTestCase{
 		{`let identity=fn(a){a;};identity(4);`, 4},
 		{`let sum=fn(a,b){a+b;};sum(1,2);`, 3},
+	}
+
+	runVmTests(t, tests)
+
+}
+
+func TestBuiltinFns(t *testing.T) {
+	tests := []vmTestCase{
+		{`len("")`, 0},
+		{`len("four")`, 4},
+		{`len([1,2,3])`, 3},
 	}
 
 	runVmTests(t, tests)
