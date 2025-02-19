@@ -246,3 +246,13 @@ func TestFirstClassFunctions(t *testing.T) {
 
 	runVmTests(t, tests)
 }
+
+func TestCallingFunctionsWithArgumentsAndBIndigns(t *testing.T) {
+	tests := []vmTestCase{
+		{`let identity=fn(a){a;};identity(4);`, 4},
+		{`let sum=fn(a,b){a+b;};sum(1,2);`, 3},
+	}
+
+	runVmTests(t, tests)
+
+}
