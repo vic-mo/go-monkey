@@ -275,3 +275,22 @@ func TestBuiltinFns(t *testing.T) {
 	runVmTests(t, tests)
 
 }
+
+func TestClosures(t *testing.T) {
+	tests := []vmTestCase{
+		{`let newAdder=fn(a,b){fn(c){a+b+c};};let adder=newAdder(1,2);adder(8);`, 11},
+	}
+
+	runVmTests(t, tests)
+
+}
+
+func TestFibonacci(t *testing.T) {
+	tests := []vmTestCase{
+		{`let fibonacci=fn(x){if (x==0){0}else{if (x==1){1}else{fibonacci(x-1)+fibonacci(x-2);}}};fibonacci(15);`, 610},
+		{`let wrapper=fn(){let countdown=fn(x){if(x==0){return 0}else{countdown(x-1)}};countdown(1);};wrapper();`, 0},
+	}
+
+	runVmTests(t, tests)
+
+}

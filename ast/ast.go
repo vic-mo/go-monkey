@@ -270,6 +270,7 @@ type FunctionLiteral struct {
 	Token      token.Token
 	Parameters []*Identifier
 	Body       *BlockStatement
+	Name       string
 }
 
 func (pe *FunctionLiteral) expressionNode()      {}
