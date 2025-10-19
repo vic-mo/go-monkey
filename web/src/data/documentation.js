@@ -4,43 +4,43 @@ export const documentation = {
     items: [
       {
         category: "Variables",
-        syntax: "let <name> = <expression>;",
+        syntax: "let name = expression;",
         example: "let x = 5;\nlet name = \"Monkey\";",
         description: "Bind values to names using the let keyword"
       },
       {
         category: "Functions",
-        syntax: "fn(<params>) { <body> }",
+        syntax: "fn(params) { body }",
         example: "let add = fn(x, y) { x + y };\nadd(5, 10);",
         description: "Define anonymous functions and assign them to variables"
       },
       {
         category: "If Expressions",
-        syntax: "if (<condition>) { <consequence> } else { <alternative> }",
+        syntax: "if (condition) { consequence } else { alternative }",
         example: "if (x > 10) {\n  puts(\"big\");\n} else {\n  puts(\"small\");\n}",
         description: "Conditional expressions that return values"
       },
       {
         category: "Return Statements",
-        syntax: "return <expression>;",
+        syntax: "return expression;",
         example: "let max = fn(a, b) {\n  if (a > b) {\n    return a;\n  }\n  return b;\n};",
         description: "Early return from functions"
       },
       {
         category: "Arrays",
-        syntax: "[<element1>, <element2>, ...]",
+        syntax: "[element1, element2, ...]",
         example: "let arr = [1, 2, 3, 4, 5];\nlet mixed = [1, \"two\", fn(x) { x }];",
         description: "Ordered collections of any type"
       },
       {
         category: "Hash Maps",
-        syntax: "{<key>: <value>, ...}",
+        syntax: "{key: value, ...}",
         example: "let person = {\"name\": \"Alice\", \"age\": 30};\nperson[\"name\"];",
         description: "Key-value pairs using strings, integers, or booleans as keys"
       },
       {
         category: "Index Expressions",
-        syntax: "<array>[<index>] or <hash>[<key>]",
+        syntax: "array[index] or hash[key]",
         example: "let arr = [1, 2, 3];\narr[0];\nlet h = {\"key\": \"value\"};\nh[\"key\"];",
         description: "Access array elements or hash values"
       }

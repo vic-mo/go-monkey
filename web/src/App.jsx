@@ -97,7 +97,14 @@ function App() {
   };
 
   const handleLoadExample = (exampleCode) => {
-    setCode(exampleCode);
+    // Decode any HTML entities that might have been encoded
+    const decoded = exampleCode
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'");
+    setCode(decoded);
     setOutput(null);
   };
 
