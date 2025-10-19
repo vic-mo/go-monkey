@@ -20,7 +20,11 @@ export default function Editor({ value, onChange, errors, onRun }) {
       ],
       run: () => {
         if (onRun) {
-          onRun();
+          // Get current editor value to ensure we run the latest code
+          const currentCode = editor.getValue();
+          onChange(currentCode);
+          // Small delay to ensure state updates
+          setTimeout(() => onRun(), 0);
         }
       }
     });
