@@ -1,0 +1,29 @@
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# WASM build artifacts (built on Vercel)
+web/public/monkey.wasm
+web/public/monkey.wasm.gz
+web/public/wasm_exec.js
+
+# Node
+web/node_modules/
+web/dist/
+web/package-lock.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
