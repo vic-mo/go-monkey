@@ -5,13 +5,16 @@ set -e
 echo "Building Monkey WASM..."
 
 # Find Go binary
-GO_BIN=$(which go 2>/dev/null || echo "/usr/local/go/bin/go")
+if ! command -v go &> /dev/null; then
+    echo "Error: Go is not installed or not in PATH"
+    exit 1
+fi
 
 # Build WASM binary
-GOOS=js GOARCH=wasm $GO_BIN build -o web/public/monkey.wasm ./wasm/main.go
+GOOS=js GOARCH=wasm go build -o web/public/monkey.wasm ./wasm/main.go
 
 # Copy Go's WASM exec helper JavaScript
-GOROOT_PATH=$($GO_BIN env GOROOT)
+GOROOT_PATH=$(go env GOROOT)
 # Try new location first (Go 1.21+), fall back to old location
 if [ -f "$GOROOT_PATH/lib/wasm/wasm_exec.js" ]; then
     cp "$GOROOT_PATH/lib/wasm/wasm_exec.js" web/public/
