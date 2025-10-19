@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Editor from './components/Editor';
 import Output from './components/Output';
 import Toolbar from './components/Toolbar';
+import Documentation from './components/Documentation';
 import { wasmInstance } from './wasm/loader';
 import './App.css';
 
@@ -30,6 +31,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [executing, setExecuting] = useState(false);
   const [wasmError, setWasmError] = useState(null);
+  const [showDocs, setShowDocs] = useState(() => {
+    const saved = localStorage.getItem('showDocs');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
 
   // Initialize WASM on mount
   useEffect(() => {
@@ -80,6 +85,19 @@ function App() {
     }
   };
 
+  const handleToggleDocs = () => {
+    setShowDocs(prev => {
+      const newValue = !prev;
+      localStorage.setItem('showDocs', JSON.stringify(newValue));
+      return newValue;
+    });
+  };
+
+  const handleLoadExample = (exampleCode) => {
+    setCode(exampleCode);
+    setOutput(null);
+  };
+
   if (loading) {
     return (
       <div className="loading-screen">
@@ -114,9 +132,19 @@ function App() {
         onRun={handleRun}
         onReset={handleReset}
         executing={executing}
+        showDocs={showDocs}
+        onToggleDocs={handleToggleDocs}
       />
 
-      <div className="panels-container">
+      <div className={`panels-container ${showDocs ? 'with-docs' : 'no-docs'}`}>
+        {showDocs && (
+          <div className="panel docs-panel">
+            <div className="panel-content">
+              <Documentation onLoadExample={handleLoadExample} />
+            </div>
+          </div>
+        )}
+
         <div className="panel editor-panel">
           <div className="panel-header">
             <span className="panel-title">Editor</span>

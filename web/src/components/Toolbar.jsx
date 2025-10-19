@@ -1,4 +1,4 @@
-export default function Toolbar({ onRun, onReset, executing, onLoadExample }) {
+export default function Toolbar({ onRun, onReset, executing, showDocs, onToggleDocs }) {
   return (
     <div className="toolbar">
       <div className="toolbar-left">
@@ -9,6 +9,13 @@ export default function Toolbar({ onRun, onReset, executing, onLoadExample }) {
       </div>
 
       <div className="toolbar-right">
+        <button
+          className={`btn btn-secondary ${showDocs ? 'active' : ''}`}
+          onClick={onToggleDocs}
+          title="Toggle documentation panel"
+        >
+          📚 Docs
+        </button>
         <button
           className="btn btn-secondary"
           onClick={onReset}
