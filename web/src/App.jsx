@@ -49,7 +49,7 @@ function App() {
       });
   }, []);
 
-  const handleRun = () => {
+  const handleRun = (codeToRun = null) => {
     if (!wasmInstance.isReady()) {
       setOutput({
         success: false,
@@ -61,10 +61,13 @@ function App() {
     setExecuting(true);
     setOutput(null);
 
+    // Use the provided code or fall back to state
+    const execCode = codeToRun !== null ? codeToRun : code;
+
     // Use setTimeout to allow UI to update
     setTimeout(() => {
       try {
-        const result = wasmInstance.execute(code);
+        const result = wasmInstance.execute(execCode);
         setOutput(result);
       } catch (error) {
         setOutput({
