@@ -49,7 +49,7 @@ function App() {
       });
   }, []);
 
-  const handleRun = (codeToRun = null) => {
+  const handleRun = (codeToRun) => {
     if (!wasmInstance.isReady()) {
       setOutput({
         success: false,
@@ -62,13 +62,25 @@ function App() {
     setOutput(null);
 
     // Use the provided code or fall back to state
-    const execCode = codeToRun !== null ? codeToRun : code;
+    const execCode = (typeof codeToRun === 'string' && codeToRun !== '') ? codeToRun : code;
+
+    console.log('handleRun called with:', typeof codeToRun, codeToRun);
+    console.log('Using execCode:', typeof execCode, execCode);
+    console.log('Code state:', typeof code, code);
+
+    if (typeof execCode !== 'string') {
+      console.error('execCode is not a string!', execCode);
+      setOutput({
+        success: false,
+        runtimeError: `Invalid code type: ${typeof execCode}`
+      });
+      setExecuting(false);
+      return;
+    }
 
     console.log('Running code - length:', execCode.length);
     console.log('Running code - first 100 chars:', execCode.substring(0, 100));
-    console.log('Running code - full:', execCode);
     console.log('Has < char:', execCode.includes('<'));
-    console.log('Char codes around <:', [...execCode].slice(15, 25).map(c => `${c}(${c.charCodeAt(0)})`));
 
     // Use setTimeout to allow UI to update
     setTimeout(() => {
