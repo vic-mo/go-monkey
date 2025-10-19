@@ -41,7 +41,7 @@ export const documentation = {
       {
         category: "Index Expressions",
         syntax: "<array>[<index>] or <hash>[<key>]",
-        example: "let arr = [1, 2, 3];\narr[0]; // 1\nlet h = {\"key\": \"value\"};\nh[\"key\"];",
+        example: "let arr = [1, 2, 3];\narr[0];\nlet h = {\"key\": \"value\"};\nh[\"key\"];",
         description: "Access array elements or hash values"
       }
     ]
@@ -53,25 +53,25 @@ export const documentation = {
       {
         category: "Arithmetic",
         operators: "+ - * /",
-        example: "5 + 3; // 8\n10 - 4; // 6\n3 * 4; // 12\n10 / 2; // 5",
+        example: "5 + 3;\n10 - 4;\n3 * 4;\n10 / 2;",
         description: "Basic arithmetic operations"
       },
       {
         category: "Comparison",
         operators: "== != < >",
-        example: "5 == 5; // true\n5 != 3; // true\n10 > 5; // true\n3 < 7; // true",
+        example: "5 == 5;\n5 != 3;\n10 > 5;\n3 < 7;",
         description: "Compare values and return booleans"
       },
       {
         category: "Boolean",
         operators: "! (not)",
-        example: "!true; // false\n!false; // true\n!(5 > 3); // false",
+        example: "!true;\n!false;\n!(5 > 3);",
         description: "Boolean negation operator"
       },
       {
         category: "Prefix",
         operators: "- (negation)",
-        example: "-5; // -5\nlet x = 10;\n-x; // -10",
+        example: "-5;\nlet x = 10;\n-x;",
         description: "Negate numbers"
       }
     ]
@@ -86,7 +86,7 @@ export const documentation = {
         params: "array or string",
         returns: "Integer - length of the collection",
         description: "Returns the number of elements in an array or characters in a string",
-        example: "len([1, 2, 3]); // 3\nlen(\"hello\"); // 5\nlen(\"\"); // 0",
+        example: "len([1, 2, 3]);\nlen(\"hello\");\nlen(\"\");",
         valid: true
       },
       {
@@ -104,7 +104,7 @@ export const documentation = {
         params: "array",
         returns: "First element or null if empty",
         description: "Returns the first element of an array",
-        example: "first([1, 2, 3]); // 1\nfirst([]); // null",
+        example: "first([1, 2, 3]);\nfirst([]);",
         valid: true
       },
       {
@@ -113,7 +113,7 @@ export const documentation = {
         params: "array",
         returns: "Last element or null if empty",
         description: "Returns the last element of an array",
-        example: "last([1, 2, 3]); // 3\nlast([]); // null",
+        example: "last([1, 2, 3]);\nlast([]);",
         valid: true
       },
       {
@@ -122,7 +122,7 @@ export const documentation = {
         params: "array",
         returns: "New array without first element",
         description: "Returns a new array with all elements except the first",
-        example: "rest([1, 2, 3, 4]); // [2, 3, 4]\nrest([1]); // []\nrest([]); // null",
+        example: "rest([1, 2, 3, 4]);\nrest([1]);\nrest([]);",
         valid: true
       },
       {
@@ -131,7 +131,7 @@ export const documentation = {
         params: "array, any value",
         returns: "New array with element added",
         description: "Returns a new array with the element appended to the end",
-        example: "push([1, 2], 3); // [1, 2, 3]\nlet a = [1];\npush(a, 2); // [1, 2]",
+        example: "push([1, 2], 3);\nlet a = [1];\npush(a, 2);",
         valid: true
       }
     ]
