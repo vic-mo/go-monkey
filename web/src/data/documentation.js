@@ -214,9 +214,9 @@ puts("Push:", push(arr, 6));`,
         code: `let map = fn(arr, f) {
   let iter = fn(arr, accumulated) {
     if (len(arr) == 0) {
-      accumulated
+      return accumulated;
     } else {
-      iter(rest(arr), push(accumulated, f(first(arr))));
+      return iter(rest(arr), push(accumulated, f(first(arr))));
     }
   };
   iter(arr, []);
@@ -230,7 +230,7 @@ map([1, 2, 3, 4], double);`,
         title: "Closures",
         description: "Functions that capture their environment",
         code: `let newAdder = fn(x) {
-  fn(y) { x + y };
+  return fn(y) { x + y };
 };
 
 let addTwo = newAdder(2);
@@ -257,9 +257,9 @@ puts("Admin:", person["isAdmin"]);`,
         code: `let reduce = fn(arr, initial, f) {
   let iter = fn(arr, result) {
     if (len(arr) == 0) {
-      result
+      return result;
     } else {
-      iter(rest(arr), f(result, first(arr)));
+      return iter(rest(arr), f(result, first(arr)));
     }
   };
   iter(arr, initial);
@@ -275,14 +275,14 @@ reduce([1, 2, 3, 4, 5], 0, sum); // 15`,
         code: `let filter = fn(arr, predicate) {
   let iter = fn(arr, accumulated) {
     if (len(arr) == 0) {
-      accumulated
+      return accumulated;
     } else {
       let head = first(arr);
       let tail = rest(arr);
       if (predicate(head)) {
-        iter(tail, push(accumulated, head));
+        return iter(tail, push(accumulated, head));
       } else {
-        iter(tail, accumulated);
+        return iter(tail, accumulated);
       }
     }
   };
@@ -298,9 +298,9 @@ filter([1, 2, 3, 4, 5, 6], isEven);`,
         description: "Classic factorial function",
         code: `let factorial = fn(n) {
   if (n == 0) {
-    1
+    return 1;
   } else {
-    n * factorial(n - 1)
+    return n * factorial(n - 1);
   }
 };
 
