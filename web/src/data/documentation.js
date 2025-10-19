@@ -234,7 +234,7 @@ map([1, 2, 3, 4], double);`,
 };
 
 let addTwo = newAdder(2);
-addTwo(3); // returns 5`,
+addTwo(3);`,
         tags: ["closures", "functions"]
       },
       {
@@ -266,7 +266,7 @@ puts("Admin:", person["isAdmin"]);`,
 };
 
 let sum = fn(x, y) { x + y };
-reduce([1, 2, 3, 4, 5], 0, sum); // 15`,
+reduce([1, 2, 3, 4, 5], 0, sum);`,
         tags: ["higher-order", "recursion", "arrays"]
       },
       {
@@ -304,7 +304,7 @@ filter([1, 2, 3, 4, 5, 6], isEven);`,
   }
 };
 
-factorial(5); // 120`,
+factorial(5);`,
         tags: ["recursion", "functions"]
       }
     ]
