@@ -2,6 +2,9 @@
 
 set -e
 
+# Save current directory
+PROJECT_DIR=$PWD
+
 echo "Installing Go for WASM build..."
 
 # Install Go 1.21.5 (lightweight and compatible)
@@ -20,7 +23,7 @@ export GOROOT="/tmp/go"
 go version
 
 # Navigate back to project
-cd ${VERCEL_PROJECT_PATH:-$PWD}
+cd "$PROJECT_DIR"
 
 # Build WASM
 echo "Building WASM..."
