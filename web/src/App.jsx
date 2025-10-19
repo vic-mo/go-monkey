@@ -104,6 +104,12 @@ function App() {
       .replace(/&amp;/g, '&')
       .replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'");
+
+    console.log('Loading example - original:', exampleCode);
+    console.log('Loading example - decoded:', decoded);
+    console.log('Has < char:', decoded.includes('<'));
+    console.log('Has &lt;:', decoded.includes('&lt;'));
+
     setCode(decoded);
     setOutput(null);
   };
