@@ -4,7 +4,7 @@ export default function Toolbar({ onRun, onReset, executing, showDocs, onToggleD
       <div className="toolbar-left">
         <h1 className="title">
           <span className="monkey-emoji">🐵</span>
-          Monkey Playground
+          <span className="title-text">Monkey Playground</span>
         </h1>
       </div>
 
@@ -13,16 +13,18 @@ export default function Toolbar({ onRun, onReset, executing, showDocs, onToggleD
           className={`btn btn-secondary ${showDocs ? 'active' : ''}`}
           onClick={onToggleDocs}
           title="Toggle documentation panel"
+          aria-label="Toggle documentation"
         >
-          📚 Docs
+          📚 <span>Docs</span>
         </button>
         <button
           className="btn btn-secondary"
           onClick={onReset}
           disabled={executing}
           title="Reset interpreter state"
+          aria-label="Reset interpreter"
         >
-          Reset
+          🔄 <span>Reset</span>
         </button>
 
         <button
@@ -30,16 +32,17 @@ export default function Toolbar({ onRun, onReset, executing, showDocs, onToggleD
           onClick={onRun}
           disabled={executing}
           title="Run code (Cmd/Ctrl + Enter)"
+          aria-label={executing ? "Running code" : "Run code"}
         >
           {executing ? (
             <>
               <span className="spinner"></span>
-              Running...
+              <span>Running...</span>
             </>
           ) : (
             <>
               <span className="run-icon">▶</span>
-              Run
+              <span>Run</span>
             </>
           )}
         </button>

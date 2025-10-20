@@ -33,7 +33,9 @@ function App() {
   const [wasmError, setWasmError] = useState(null);
   const [showDocs, setShowDocs] = useState(() => {
     const saved = localStorage.getItem('showDocs');
-    return saved !== null ? JSON.parse(saved) : true;
+    // Default to false on mobile devices (< 768px)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    return saved !== null ? JSON.parse(saved) : !isMobile;
   });
 
   // Initialize WASM on mount

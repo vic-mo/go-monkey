@@ -1,9 +1,22 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MonacoEditor from '@monaco-editor/react';
 import { configureMonkeyLanguage } from '../monaco/monkey-language';
 
 export default function Editor({ value, onChange, errors, onRun }) {
   const editorRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detect mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
@@ -78,20 +91,29 @@ export default function Editor({ value, onChange, errors, onRun }) {
         theme="monkey-dark"
         options={{
           minimap: { enabled: false },
-          fontSize: 14,
+          // Use 16px on mobile to prevent iOS zoom
+          fontSize: isMobile ? 16 : 14,
           lineNumbers: 'on',
           scrollBeyondLastLine: false,
           automaticLayout: true,
           tabSize: 2,
           insertSpaces: true,
           wordWrap: 'on',
-          padding: { top: 10, bottom: 10 },
+          padding: { top: isMobile ? 8 : 10, bottom: isMobile ? 8 : 10 },
           renderLineHighlight: 'all',
           cursorBlinking: 'smooth',
           smoothScrolling: true,
-          contextmenu: true,
+          contextmenu: !isMobile, // Disable context menu on mobile
           formatOnPaste: true,
-          formatOnType: true
+          formatOnType: true,
+          // Better mobile support
+          quickSuggestions: !isMobile, // Disable on mobile for better performance
+          suggestOnTriggerCharacters: !isMobile,
+          acceptSuggestionOnEnter: isMobile ? 'off' : 'on',
+          folding: !isMobile, // Disable code folding on mobile
+          glyphMargin: !isMobile, // Disable glyph margin on mobile
+          lineDecorationsWidth: isMobile ? 5 : 10,
+          lineNumbersMinChars: isMobile ? 3 : 5
         }}
       />
     </div>
