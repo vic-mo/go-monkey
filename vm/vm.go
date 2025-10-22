@@ -222,7 +222,7 @@ func (vm *VM) Run() error {
 			left := vm.pop()
 			leftValue := left.(*object.Integer).Value
 			rightValue := right.(*object.Integer).Value
-			result := rightValue / leftValue
+			result := leftValue / rightValue
 			vm.push(&object.Integer{Value: result})
 		case code.OpMul:
 			right := vm.pop()

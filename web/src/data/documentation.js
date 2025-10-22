@@ -169,11 +169,6 @@ export const documentation = {
         type: "Function",
         example: "fn(x) { x + 1 }",
         description: "First-class functions with closures"
-      },
-      {
-        type: "Null",
-        example: "null",
-        description: "Represents absence of value"
       }
     ]
   },
